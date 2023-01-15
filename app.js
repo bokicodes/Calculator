@@ -46,6 +46,7 @@ function divide(a,b){
 }
 
 function operate(a,b,op){
+    console.log(a); console.log(b); console.log(op);
     let aNum = Number(a);
     let bNum = Number(b);
     let result;
@@ -88,6 +89,7 @@ for(let i = 0; i < btnsNumbers.length; i++){
         }
         if(operatorClicked){
             displayValueSecond = screen.innerText.substring(displayValueFirst.length+1);
+            console.log("Second value: "+ displayValueSecond);
         }
     });
 }
@@ -113,6 +115,11 @@ for(let i = 0; i < btnsOperators.length; i++){
             return;
         }
 
+        if(defaultScreenZero){
+            displayValueFirst = "0";
+            defaultScreenZero = false;
+            console.log(defaultScreenZero);
+        }
         opNumerator++;
 
         if(opNumerator === 2){
@@ -141,9 +148,7 @@ for(let i = 0; i < btnsOperators.length; i++){
         operator = btnsOperators[i].innerText;
         screen.innerText += operator;
 
-        if(screen.innerText == "0"){
-            defaultScreenZero = true;
-        }
+        
     });
 }
 
