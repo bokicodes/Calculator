@@ -40,9 +40,8 @@ function multiply(a,b){
 function divide(a,b){
     if(b != 0){
         return a/b;
-    }
-    else{
-        console.log("can't divide with 0");
+    }else{
+        return "Cannot divide by 0";
     }
 }
 
@@ -65,14 +64,14 @@ function operate(a,b,op){
             break;
         default:
             console.log("invalid operator");
-            return;
+            break;
     }
     return result;
 }
 
 
-let displayValueFirst;
-let displayValueSecond;
+let displayValueFirst = "";
+let displayValueSecond = "";
 let defaultScreenZero = true;
 let operatorClicked = false;
 
@@ -86,11 +85,9 @@ for(let i = 0; i < btnsNumbers.length; i++){
         screen.innerText += btnsNumbers[i].innerText;
         if(!operatorClicked){
             displayValueFirst = screen.innerText;
-            console.log(displayValueFirst);
         }
         if(operatorClicked){
             displayValueSecond = screen.innerText.substring(displayValueFirst.length+1);
-            console.log(displayValueSecond);
         }
     });
 }
@@ -99,41 +96,106 @@ for(let i = 0; i < btnsNumbers.length; i++){
 btnClear.addEventListener("click", () => {
     screen.innerText = "0";
     defaultScreenZero = true;
-    displayValueFirst = 0;
-    displayValueSecond = 0;
+    displayValueFirst = "";
+    displayValueSecond = "";
     operatorClicked = false;
+    opNumerator = 0;
+    dotNumerator = 0;
 });
 
 // OPERATOR BUTTONS
 let operator;
-let numerator = 0;
+let opNumerator = 0;
 for(let i = 0; i < btnsOperators.length; i++){
     btnsOperators[i].addEventListener("click", () => {
-        numerator++;
-        if(numerator === 2){
+        if(screen.innerText.endsWith(".") || screen.innerText.endsWith("+") || screen.innerText.endsWith("-") ||
+           screen.innerText.endsWith("x") || screen.innerText.endsWith("/")){
+            return;
+        }
+
+        opNumerator++;
+
+        if(opNumerator === 2){
+
             screen.innerText = operate(displayValueFirst,displayValueSecond,operator);
+
+            if(screen.innerText === "Cannot divide by 0"){
+                displayValueFirst = "";
+                displayValueSecond = "";
+                opNumerator = 0;
+                dotNumerator = 0;
+                return;
+            }
+
             displayValueFirst = screen.innerText;
-            console.log(displayValueFirst);
             displayValueSecond = "";
-            numerator = 1;
+            opNumerator = 1;
+            
+            if(screen.innerText.includes("."))
+                dotNumerator = 1;
+            else
+                dotNumerator = 0;
+
         }
         operatorClicked = true;
         operator = btnsOperators[i].innerText;
         screen.innerText += operator;
+
+        if(screen.innerText == "0"){
+            defaultScreenZero = true;
+        }
     });
 }
 
 // EQUALS BUTTON
 btnEquals.addEventListener("click", () => {
-    console.log(displayValueFirst);
-    console.log(displayValueSecond);
-    console.log(operator);
+    
+    if(screen.innerText.endsWith(".") || screen.innerText.endsWith("+") || screen.innerText.endsWith("-") ||
+           screen.innerText.endsWith("x") || screen.innerText.endsWith("/")){
+            return;
+        }
+
     if(displayValueFirst !== "" && displayValueSecond !== "" && operator !== ""){
         screen.innerText = operate(displayValueFirst,displayValueSecond,operator);
-        displayValueFirst = screen.innerText;
-        console.log(displayValueFirst);
+        if(screen.innerText === "Cannot divide by 0"){
+            displayValueFirst = "";
+        }
+        else{
+            displayValueFirst = screen.innerText;
+        }
         displayValueSecond = "";
+        opNumerator = 0;
+        operatorClicked = false;
+
+        if(screen.innerText.includes(".")){
+            dotNumerator = 1;
+        }
+        else{
+            dotNumerator = 0;
+        }
+
+        if(screen.innerText == "0"){
+            defaultScreenZero = true;
+        }
     }
 });
 
+// BUTTON DOT
+let dotNumerator = 0;
+btnDot.addEventListener("click", () =>{
+    dotNumerator++;
+    if(dotNumerator === 2 && !operatorClicked){
+        dotNumerator = 1;
+        return;
+    }
+    if(screen.innerText.substring(displayValueFirst.length+1).includes(".")){
+        return;
+    }
+    if(operatorClicked && displayValueSecond === ""){
+        screen.innerText = screen.innerText + "0" + btnDot.innerText;
+    }
+    else
+        screen.innerText += btnDot.innerText;
 
+    defaultScreenZero = false;
+});
