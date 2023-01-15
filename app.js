@@ -106,8 +106,17 @@ btnClear.addEventListener("click", () => {
 
 // OPERATOR BUTTONS
 let operator;
+let numerator = 0;
 for(let i = 0; i < btnsOperators.length; i++){
     btnsOperators[i].addEventListener("click", () => {
+        numerator++;
+        if(numerator === 2){
+            screen.innerText = operate(displayValueFirst,displayValueSecond,operator);
+            displayValueFirst = screen.innerText;
+            console.log(displayValueFirst);
+            displayValueSecond = "";
+            numerator = 1;
+        }
         operatorClicked = true;
         operator = btnsOperators[i].innerText;
         screen.innerText += operator;
