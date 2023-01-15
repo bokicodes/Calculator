@@ -110,6 +110,10 @@ let operator;
 let opNumerator = 0;
 for(let i = 0; i < btnsOperators.length; i++){
     btnsOperators[i].addEventListener("click", () => {
+        if(screen.innerText.endsWith("x") && btnsOperators[i].innerText === "-"){
+            screen.innerText += "-"
+            return;
+        }
         if(screen.innerText.endsWith(".") || screen.innerText.endsWith("+") || screen.innerText.endsWith("-") ||
            screen.innerText.endsWith("x") || screen.innerText.endsWith("/")){
             return;
