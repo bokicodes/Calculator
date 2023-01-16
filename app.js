@@ -236,14 +236,33 @@ btnDot.addEventListener("click", () =>{
     defaultScreenZero = false;
 });
 
-
-
-
-
-
-
-/* EVO STA TI JE OSTALO ZA SADA DA URADIS: 
-You should round answers with long decimals so that they don’t overflow the screen.
-(VIDI ZA OVO DA I KAD KUCA IMA NEKI MAXIMUM A NE DA IZLAZI IZ KALKULATORA!!!);
-
-Add a “backspace” button, so the user can undo if they click the wrong number.*/
+console.log(btnDelete);
+btnDelete.addEventListener("click", () => {
+    if(defaultScreenZero || screen.innerText === "0"){
+        return;
+    }
+    if(!(operatorClicked)){
+        screen.innerText = screen.innerText.slice(0,-1);
+        displayValueFirst = displayValueFirst.slice(0,-1); //removes last character, -1 = .length-1
+    }
+    if(operatorClicked){
+        if(displayValueSecond === ""){
+            screen.innerText = screen.innerText.slice(0,-1);
+            operator === "";
+            operatorClicked = false;
+        }else{
+            screen.innerText = screen.innerText.slice(0,-1);
+            displayValueSecond = displayValueSecond.slice(0,-1);
+        }
+    }
+    if(screen.innerText === "0"){
+        defaultScreenZero = true;
+    }
+    if(!(screen.innerText.includes("."))){
+        dotNumerator = 0;
+    }
+    if(screen.innerText === ""){
+        screen.innerText = "0";
+        return;
+    }
+});
