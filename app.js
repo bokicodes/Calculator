@@ -94,16 +94,13 @@ for(let i = 0; i < btnsNumbers.length; i++){
         if(screen.innerText === "Cannot divide by 0"){
             return;
         }
-        if(screen.innerText.length === 15){
-            return;
-        }
-        screen.innerText += btnsNumbers[i].innerText;
-        if(!operatorClicked){
+        if(!operatorClicked && screen.innerText.length < 15){
             displayValueFirst = screen.innerText;
+            screen.innerText += btnsNumbers[i].innerText;
         }
-        if(operatorClicked){
+        if(operatorClicked && displayValueSecond.length < 14){
             displayValueSecond = screen.innerText.substring(displayValueFirst.length+1);
-            console.log("Second value: "+ displayValueSecond);
+            screen.innerText += btnsNumbers[i].innerText;
         }
     });
 }

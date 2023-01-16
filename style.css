@@ -16,6 +16,7 @@ body{
     width: 380px;
     height: 510px;
     margin: 10px;
+    
 }
 .screen{
     height: 100px;
@@ -28,6 +29,8 @@ body{
     padding-top: 20px;
     border-radius: 10px;
     border: 2px solid black; 
+    word-wrap: break-word;
+    word-break: break-all;
 }
 .two-buttons{
     display: flex;
