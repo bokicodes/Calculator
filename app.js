@@ -145,7 +145,6 @@ for(let i = 0; i < btnsOperators.length; i++){
         if(defaultScreenZero){
             displayValueFirst = "0";
             defaultScreenZero = false;
-            console.log(defaultScreenZero);
         }
         opNumerator++;
 
@@ -236,6 +235,8 @@ btnDot.addEventListener("click", () =>{
     defaultScreenZero = false;
 });
 
+
+    // DELETE BUTTON
 console.log(btnDelete);
 btnDelete.addEventListener("click", () => {
     if(defaultScreenZero || screen.innerText === "0" || screen.innerText === "Cannot divide by 0" ||
@@ -249,8 +250,9 @@ btnDelete.addEventListener("click", () => {
     if(operatorClicked){
         if(displayValueSecond === ""){
             screen.innerText = screen.innerText.slice(0,-1);
-            operator === "";
+            operator = "";
             operatorClicked = false;
+            opNumerator = 0;
         }else{
             screen.innerText = screen.innerText.slice(0,-1);
             displayValueSecond = displayValueSecond.slice(0,-1);
@@ -264,6 +266,16 @@ btnDelete.addEventListener("click", () => {
     }
     if(screen.innerText === ""){
         screen.innerText = "0";
+        defaultScreenZero = true;
         return;
     }
 });
+
+/*
+let displayValueFirst = "";
+let displayValueSecond = "";
+let defaultScreenZero = true;
+let operatorClicked = false;
+opNUmerator
+dotNUmerator
+operator*/ 
