@@ -238,7 +238,8 @@ btnDot.addEventListener("click", () =>{
 
 console.log(btnDelete);
 btnDelete.addEventListener("click", () => {
-    if(defaultScreenZero || screen.innerText === "0"){
+    if(defaultScreenZero || screen.innerText === "0" || screen.innerText === "Cannot divide by 0" ||
+        screen.innerText === "infinity"){
         return;
     }
     if(!(operatorClicked)){
