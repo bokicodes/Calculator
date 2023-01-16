@@ -260,13 +260,18 @@ btnDelete.addEventListener("click", () => {
     }
     if(screen.innerText === "0"){
         defaultScreenZero = true;
+        dotNumerator = 0;
     }
     if(!(screen.innerText.includes("."))){
         dotNumerator = 0;
     }
+    if(screen.innerText.includes(".")){
+        dotNumerator = 1;
+    }
     if(screen.innerText === ""){
         screen.innerText = "0";
         defaultScreenZero = true;
+        dotNumerator = 0;
         return;
     }
 });
