@@ -25,38 +25,49 @@ const btnsNumbers = document.querySelectorAll(".btn");
     //all operators
 const btnsOperators = document.querySelectorAll(".btnOp");
 
-console.log(btnsNumbers);
-console.log(btnsOperators);
-
 function add(a,b){
     let res = a+b;
+    if(Number.isNaN(res) || res > Number.MAX_SAFE_INTEGER || res < Number.MIN_SAFE_INTEGER){
+        return "infinity";
+    }
     let finalRes = Number(Math.round(res+'e'+5)+'e-'+5);
     return finalRes;
 }
 function subtract(a,b){
     let res = a-b;
+    if(Number.isNaN(res) || res > Number.MAX_SAFE_INTEGER || res < Number.MIN_SAFE_INTEGER){
+        return "infinity";
+    }
     let finalRes = Number(Math.round(res+'e'+5)+'e-'+5);
     return finalRes;
 }
 function multiply(a,b){
     let res = a*b;
+    if(Number.isNaN(res) ||res > Number.MAX_SAFE_INTEGER || res < Number.MIN_SAFE_INTEGER){
+        return "infinity";
+    }
     let finalRes = Number(Math.round(res+'e'+5)+'e-'+5);
     return finalRes;
 }
 function divide(a,b){
     if(b != 0){
         let res = a/b;
+        if(Number.isNaN(res) || res > Number.MAX_SAFE_INTEGER || res < Number.MIN_SAFE_INTEGER){
+            return "infinity";
+        }
         let finalRes = Number(Math.round(res+'e'+5)+'e-'+5);
         return finalRes;
     }else{
         return "Cannot divide by 0";
     }
+
 }
 
 function operate(a,b,op){
     console.log(a); console.log(b); console.log(op);
     let aNum = Number(a);
     let bNum = Number(b);
+    
     let result;
     switch(op){
         case '+':
@@ -72,7 +83,6 @@ function operate(a,b,op){
             result = divide(aNum,bNum);
             break;
         default:
-            console.log("invalid operator");
             break;
     }
     return result;
@@ -91,16 +101,17 @@ for(let i = 0; i < btnsNumbers.length; i++){
             screen.innerText = "";
             defaultScreenZero = false; //it isn't there anymore
         }
-        if(screen.innerText === "Cannot divide by 0"){
+        if(screen.innerText === "Cannot divide by 0" || screen.innerText === "infinity"){
             return;
         }
+        
         if(!operatorClicked && screen.innerText.length < 15){
-            displayValueFirst = screen.innerText;
             screen.innerText += btnsNumbers[i].innerText;
+            displayValueFirst = screen.innerText;      
         }
         if(operatorClicked && displayValueSecond.length < 14){
-            displayValueSecond = screen.innerText.substring(displayValueFirst.length+1);
             screen.innerText += btnsNumbers[i].innerText;
+            displayValueSecond = screen.innerText.substring(displayValueFirst.length+1);      
         }
     });
 }
@@ -126,7 +137,8 @@ for(let i = 0; i < btnsOperators.length; i++){
             return;
         }
         if(screen.innerText.endsWith(".") || screen.innerText.endsWith("+") || screen.innerText.endsWith("-") ||
-           screen.innerText.endsWith("x") || screen.innerText.endsWith("/") || screen.innerText === "Cannot divide by 0"){
+           screen.innerText.endsWith("x") || screen.innerText.endsWith("/") || screen.innerText === "Cannot divide by 0"
+           || screen.innerText === "infinity"){
             return;
         }
 
@@ -141,7 +153,7 @@ for(let i = 0; i < btnsOperators.length; i++){
 
             screen.innerText = operate(displayValueFirst,displayValueSecond,operator);
 
-            if(screen.innerText === "Cannot divide by 0"){
+            if(screen.innerText === "Cannot divide by 0" || screen.innerText === "infinity"){
                 displayValueFirst = "";
                 displayValueSecond = "";
                 opNumerator = 0;
@@ -171,13 +183,14 @@ for(let i = 0; i < btnsOperators.length; i++){
 btnEquals.addEventListener("click", () => {
     
     if(screen.innerText.endsWith(".") || screen.innerText.endsWith("+") || screen.innerText.endsWith("-") ||
-           screen.innerText.endsWith("x") || screen.innerText.endsWith("/") || screen.innerText === "Cannot divide by 0"){
+           screen.innerText.endsWith("x") || screen.innerText.endsWith("/") || screen.innerText === "Cannot divide by 0"
+            || screen.innerText === "infinity"){
             return;
         }
 
     if(displayValueFirst !== "" && displayValueSecond !== "" && operator !== ""){
         screen.innerText = operate(displayValueFirst,displayValueSecond,operator);
-        if(screen.innerText === "Cannot divide by 0"){
+        if(screen.innerText === "Cannot divide by 0" || screen.innerText === "infinity"){
             displayValueFirst = "";
         }
         else{
@@ -204,7 +217,7 @@ btnEquals.addEventListener("click", () => {
 let dotNumerator = 0;
 btnDot.addEventListener("click", () =>{
     dotNumerator++;
-    if(screen.innerText === "Cannot divide by 0"){
+    if(screen.innerText === "Cannot divide by 0" || screen.innerText === "infinity"){
         return;
     }
     if(dotNumerator === 2 && !operatorClicked){
