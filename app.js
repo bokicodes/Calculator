@@ -29,17 +29,25 @@ console.log(btnsNumbers);
 console.log(btnsOperators);
 
 function add(a,b){
-    return a+b;
+    let res = a+b;
+    let finalRes = Number(Math.round(res+'e'+5)+'e-'+5);
+    return finalRes;
 }
 function subtract(a,b){
-    return a-b;
+    let res = a-b;
+    let finalRes = Number(Math.round(res+'e'+5)+'e-'+5);
+    return finalRes;
 }
 function multiply(a,b){
-    return a*b;
+    let res = a*b;
+    let finalRes = Number(Math.round(res+'e'+5)+'e-'+5);
+    return finalRes;
 }
 function divide(a,b){
     if(b != 0){
-        return a/b;
+        let res = a/b;
+        let finalRes = Number(Math.round(res+'e'+5)+'e-'+5);
+        return finalRes;
     }else{
         return "Cannot divide by 0";
     }
@@ -83,6 +91,12 @@ for(let i = 0; i < btnsNumbers.length; i++){
             screen.innerText = "";
             defaultScreenZero = false; //it isn't there anymore
         }
+        if(screen.innerText === "Cannot divide by 0"){
+            return;
+        }
+        if(screen.innerText.length === 15){
+            return;
+        }
         screen.innerText += btnsNumbers[i].innerText;
         if(!operatorClicked){
             displayValueFirst = screen.innerText;
@@ -115,7 +129,7 @@ for(let i = 0; i < btnsOperators.length; i++){
             return;
         }
         if(screen.innerText.endsWith(".") || screen.innerText.endsWith("+") || screen.innerText.endsWith("-") ||
-           screen.innerText.endsWith("x") || screen.innerText.endsWith("/")){
+           screen.innerText.endsWith("x") || screen.innerText.endsWith("/") || screen.innerText === "Cannot divide by 0"){
             return;
         }
 
@@ -160,7 +174,7 @@ for(let i = 0; i < btnsOperators.length; i++){
 btnEquals.addEventListener("click", () => {
     
     if(screen.innerText.endsWith(".") || screen.innerText.endsWith("+") || screen.innerText.endsWith("-") ||
-           screen.innerText.endsWith("x") || screen.innerText.endsWith("/")){
+           screen.innerText.endsWith("x") || screen.innerText.endsWith("/") || screen.innerText === "Cannot divide by 0"){
             return;
         }
 
@@ -193,6 +207,9 @@ btnEquals.addEventListener("click", () => {
 let dotNumerator = 0;
 btnDot.addEventListener("click", () =>{
     dotNumerator++;
+    if(screen.innerText === "Cannot divide by 0"){
+        return;
+    }
     if(dotNumerator === 2 && !operatorClicked){
         dotNumerator = 1;
         return;
@@ -208,3 +225,15 @@ btnDot.addEventListener("click", () =>{
 
     defaultScreenZero = false;
 });
+
+
+
+
+
+
+
+/* EVO STA TI JE OSTALO ZA SADA DA URADIS: 
+You should round answers with long decimals so that they don’t overflow the screen.
+(VIDI ZA OVO DA I KAD KUCA IMA NEKI MAXIMUM A NE DA IZLAZI IZ KALKULATORA!!!);
+
+Add a “backspace” button, so the user can undo if they click the wrong number.*/
